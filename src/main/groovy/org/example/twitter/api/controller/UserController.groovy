@@ -1,7 +1,7 @@
 package org.example.twitter.api.controller
 
-import org.example.twitter.api.entity.Post
-import org.example.twitter.api.service.PostService
+import org.example.twitter.api.entity.User
+import org.example.twitter.api.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -13,34 +13,34 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/posts")
-class PostController {
+@RequestMapping("/users")
+class UserController {
 
     @Autowired
-    private PostService postService
+    private UserService userService
 
     @PostMapping('/')
-    Post createPost(@RequestBody Post post) {
-        postService.savePost(post)
+    User createUser(@RequestBody User user) {
+        userService.saveUser(user)
     }
 
     @GetMapping('/')
-    List<Post> listPosts() {
-        postService.findAllPosts()
+    List<User> listUsers() {
+        userService.findAllUsers()
     }
 
     @GetMapping('/{id}')
-    Post getPost(@PathVariable Long id) {
-        postService.findPostById(id)
+    User getUser(@PathVariable Long id) {
+        userService.findUserById(id)
     }
 
     @PutMapping('/{id}')
-    Post updatePost(@PathVariable Long id, @RequestBody Post post) {
-        postService.updatePost(id, post)
+    User updateUser(@PathVariable Long id, @RequestBody User user) {
+        userService.updateUser(id, user)
     }
 
     @DeleteMapping('/{id}')
-    void deletePost(@PathVariable Long id) {
-        postService.deletePost(id)
+    void deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id)
     }
 }

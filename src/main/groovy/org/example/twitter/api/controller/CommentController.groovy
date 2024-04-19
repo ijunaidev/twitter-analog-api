@@ -1,7 +1,7 @@
 package org.example.twitter.api.controller
 
-import org.example.twitter.api.entity.Post
-import org.example.twitter.api.service.PostService
+import org.example.twitter.api.entity.Comment
+import org.example.twitter.api.service.CommentService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -13,34 +13,34 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/posts")
-class PostController {
+@RequestMapping("/comments")
+class CommentController {
 
     @Autowired
-    private PostService postService
+    private CommentService commentService
 
     @PostMapping('/')
-    Post createPost(@RequestBody Post post) {
-        postService.savePost(post)
+    Comment createComment(@RequestBody Comment comment) {
+        commentService.saveComment(comment)
     }
 
     @GetMapping('/')
-    List<Post> listPosts() {
-        postService.findAllPosts()
+    List<Comment> listComments() {
+        commentService.findAllComments()
     }
 
     @GetMapping('/{id}')
-    Post getPost(@PathVariable Long id) {
-        postService.findPostById(id)
+    Comment getComment(@PathVariable Long id) {
+        commentService.findCommentById(id)
     }
 
     @PutMapping('/{id}')
-    Post updatePost(@PathVariable Long id, @RequestBody Post post) {
-        postService.updatePost(id, post)
+    Comment updateComment(@PathVariable Long id, @RequestBody Comment comment) {
+        commentService.updateComment(id, comment)
     }
 
     @DeleteMapping('/{id}')
-    void deletePost(@PathVariable Long id) {
-        postService.deletePost(id)
+    void deleteComment(@PathVariable Long id) {
+        commentService.deleteComment(id)
     }
 }
