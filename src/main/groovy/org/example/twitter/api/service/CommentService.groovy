@@ -3,6 +3,7 @@ package org.example.twitter.api.service
 import org.example.twitter.api.entity.Comment
 import org.example.twitter.api.repository.CommentRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Service
 
 @Service
@@ -10,6 +11,15 @@ class CommentService {
 
     @Autowired
     CommentRepository commentRepository
+
+    boolean canUserDeleteComment(Authentication authentication, Long commentId) {
+        Comment comment = commentRepository.findById(commentId).orElse(null)
+        if (comment != null && authentication != null) {
+            String currentUsername = authentication.getName()
+            return comment.commenter.username.equals(currentUsername)
+        }
+        return false
+    }
 
     Comment saveComment(Comment comment) {
         commentRepository.save(comment)
