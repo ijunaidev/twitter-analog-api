@@ -1,10 +1,14 @@
 package org.example.twitter.api.entity
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.OneToMany
+import org.springframework.security.core.GrantedAuthority
+
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+import javax.persistence.ManyToMany
+import javax.persistence.OneToMany
+import javax.persistence.OneToOne
 
 @Entity
 class User {
@@ -23,4 +27,7 @@ class User {
 
     @OneToMany(mappedBy = 'following')
     Set<Follow> following
+
+    @OneToOne
+    Role role
 }

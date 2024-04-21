@@ -4,11 +4,9 @@ import org.example.twitter.api.entity.Like
 import org.example.twitter.api.entity.User
 import org.example.twitter.api.repository.LikeRepository
 import org.example.twitter.api.service.LikeService
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.core.Authentication
 import spock.lang.Specification
 
-@SpringBootTest
 class LikeServiceSpec extends Specification {
 
     LikeRepository likeRepository = Mock()

@@ -1,5 +1,6 @@
 package org.example.twitteranalogapi.service
 
+import org.example.twitter.api.repository.RoleRepository
 import org.example.twitter.api.service.UserService
 import spock.lang.Specification
 import org.example.twitter.api.entity.User
@@ -7,7 +8,8 @@ import org.example.twitter.api.repository.UserRepository
 
 class UserServiceSpec extends Specification {
     UserRepository userRepository = Mock()
-    UserService userService = new UserService(userRepository)
+    RoleRepository roleRepository = Mock()
+    UserService userService = new UserService(userRepository, roleRepository)
 
     def "saveUser should save and return the user"() {
         given:

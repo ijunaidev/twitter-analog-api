@@ -4,11 +4,9 @@ import org.example.twitter.api.entity.Follow
 import org.example.twitter.api.entity.User
 import org.example.twitter.api.repository.FollowRepository
 import org.example.twitter.api.service.FollowService
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.core.Authentication
 import spock.lang.Specification
 
-@SpringBootTest
 class FollowServiceSpec extends Specification {
 
     FollowRepository followRepository = Mock()

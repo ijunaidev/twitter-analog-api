@@ -1,13 +1,10 @@
 package org.example.twitteranalogapi.service
 
 import org.example.twitter.api.service.PostService
-import org.springframework.boot.test.context.SpringBootTest
-
 import spock.lang.Specification
 import org.example.twitter.api.entity.Post
 import org.example.twitter.api.repository.PostRepository
 
-@SpringBootTest
 class PostServiceSpec extends Specification {
 
     PostRepository postRepository = Mock()

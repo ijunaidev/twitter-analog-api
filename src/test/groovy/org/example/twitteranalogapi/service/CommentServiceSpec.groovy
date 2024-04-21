@@ -2,13 +2,11 @@ package org.example.twitteranalogapi.service
 
 import org.example.twitter.api.entity.User
 import org.example.twitter.api.service.CommentService
-import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification
 import org.example.twitter.api.entity.Comment
 import org.example.twitter.api.repository.CommentRepository
 import org.springframework.security.core.Authentication
 
-@SpringBootTest
 class CommentServiceSpec extends Specification {
 
     CommentRepository commentRepository = Mock()
