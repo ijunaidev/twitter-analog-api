@@ -20,22 +20,17 @@ class UserService {
     }
 
     User saveUser(User user) {
-        // Retrieve the user role from the RoleRepository
         Optional<Role> optionalUserRole = roleRepository.findByName("ROLE_USER")
         if (!optionalUserRole.isPresent()) {
             throw new RuntimeException("ROLE_USER not found")
         }
         Role userRole = optionalUserRole.get()
 
-        // Set the user role
         user.setRole(userRole)
-
-        // Clear other associations to avoid issues with Hibernate
         user.setFollowers(null)
         user.setFollowing(null)
         user.setPosts(null)
 
-        // Save the user
         userRepository.save(user)
     }
 

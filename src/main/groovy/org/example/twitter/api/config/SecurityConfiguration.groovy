@@ -46,7 +46,7 @@ class SecurityConfiguration {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .csrf().disable()
-                .addFilterBefore(jwtTokenValidationFilter(), UsernamePasswordAuthenticationFilter.class); // Add JWT token validation filter before UsernamePasswordAuthenticationFilter
+                .addFilterBefore(jwtTokenValidationFilter(), UsernamePasswordAuthenticationFilter.class)
 
         return http.build()
     }

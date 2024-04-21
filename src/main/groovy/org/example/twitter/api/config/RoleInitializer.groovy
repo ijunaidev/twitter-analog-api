@@ -16,7 +16,6 @@ class RoleInitializer {
 
     @PostConstruct
     void initRoles() {
-        // Check if the roles already exist
         if (!roleRepository.existsByName("ROLE_ADMIN")) {
             roleRepository.save(new Role(name: "ROLE_ADMIN"))
         }

@@ -46,48 +46,46 @@ class UserController {
 
     @PostMapping("/register")
     public User registerUser(@RequestBody User user) {
-        // Check if the user already exists in the database
         if (userService.existsByUsername(user.getUsername())) {
-            throw new UserAlreadyExistsException("User with username " + user.getUsername() + " already exists");
+            throw new UserAlreadyExistsException("User with username " + user.getUsername() + " already exists")
         }
 
-        // Encode the password and save the user
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        return userService.saveUser(user);
+        String encodedPassword = passwordEncoder.encode(user.getPassword())
+        user.setPassword(encodedPassword)
+        return userService.saveUser(user)
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestParam String username, @RequestParam String password) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username)
         if (passwordEncoder.matches(password, userDetails.getPassword())) {
-            final String token = jwtTokenUtil.generateToken(userDetails);
+            final String token = jwtTokenUtil.generateToken(userDetails)
             boolean isAdmin = userDetails.getAuthorities().stream()
-                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority() == "ROLE_ADMIN");
+                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority() == "ROLE_ADMIN")
 
-            AuthResponse response = new AuthResponse("User logged in successfully", token, isAdmin);
-            return ResponseEntity.ok(response);
+            AuthResponse response = new AuthResponse("User logged in successfully", token, isAdmin)
+            return ResponseEntity.ok(response)
         } else {
-            return ResponseEntity.badRequest().body("Invalid username or password");
+            return ResponseEntity.badRequest().body("Invalid username or password")
         }
     }
 
     @PostMapping("/logout")
-    //@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> logoutUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication()
         if (!authentication.getAuthorities().stream()
                 .anyMatch(r -> r.getAuthority().equals("ROLE_USER") || r.getAuthority().equals("ROLE_ADMIN"))) {
-            throw new AccessDeniedException("Insufficient privileges to perform this action");
+            throw new AccessDeniedException("Insufficient privileges to perform this action")
         }
-        // Check if there is an authenticated user
+
         if (SecurityContextHolder.getContext().getAuthentication() != null &&
                 SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
-            // Clear the security context if an authenticated user exists
+
             SecurityContextHolder.clearContext()
             return ResponseEntity.ok("User logged out successfully")
         } else {
-            // Return a response indicating that no user is logged in
+
             return ResponseEntity.badRequest().body("No user is logged in")
         }
     }

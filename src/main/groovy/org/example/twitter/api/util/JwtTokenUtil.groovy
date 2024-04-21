@@ -22,8 +22,7 @@ class JwtTokenUtil {
 
     String generateToken(UserDetails userDetails) {
         def claims = [:]
-        // Add role to the claims
-        claims.put("role", userDetails.authorities.toString()) // Add the authorities as a claim
+        claims.put("role", userDetails.authorities.toString())
 
         return createToken(claims as Map<String, Object>, userDetails.username)
     }
@@ -46,9 +45,6 @@ class JwtTokenUtil {
     }
 
     private String createToken(Map<String, Object> claims, String subject) {
-        // Generate a secure key for HS256 algorithm
-        //def secureKey = Keys.secretKeyFor(SignatureAlgorithm.HS256)
-
         return Jwts.builder().setClaims(claims).setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
