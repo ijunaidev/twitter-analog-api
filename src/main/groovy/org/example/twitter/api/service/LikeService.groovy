@@ -9,8 +9,11 @@ import org.springframework.stereotype.Service
 @Service
 class LikeService {
 
-    @Autowired
     LikeRepository likeRepository
+
+    LikeService(LikeRepository likeRepository) {
+        this.likeRepository = likeRepository
+    }
 
     boolean canUserDeleteLike(Authentication authentication, Long likeId) {
         Like like = likeRepository.findById(likeId).orElse(null)

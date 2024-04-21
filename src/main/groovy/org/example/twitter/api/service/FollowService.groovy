@@ -9,16 +9,28 @@ import org.springframework.stereotype.Service
 @Service
 class FollowService {
 
-    @Autowired
     FollowRepository followRepository
 
-    boolean canUserUnfollow(Authentication authentication, Long followId) {
-        Follow follow = followRepository.findById(followId).orElse(null)
-        if (follow != null && authentication != null) {
-            String currentUsername = authentication.getName()
-            return follow.follower.username.equals(currentUsername)
+    FollowService(FollowRepository followRepository) {
+        this.followRepository = followRepository
+    }
+
+//    boolean canUserUnfollow(Authentication authentication, Long followId) {
+//        Follow follow = followRepository.findById(followId).orElse(null)
+//        if (follow != null && authentication != null) {
+//            String currentUsername = authentication.getName()
+//            return follow.follower.username.equals(currentUsername)
+//        }
+//        return false
+//    }
+
+    boolean canUserUnfollow(Authentication auth, Long followId) {
+        Optional<Follow> followOpt = followRepository.findById(followId);
+        if (followOpt.isPresent()) {
+            Follow follow = followOpt.get();
+            return follow.follower.username.equals(auth.getName());
         }
-        return false
+        return false; // Correctly handle case where follow is not found
     }
 
     Follow saveFollow(Follow follow) {

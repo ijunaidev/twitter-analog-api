@@ -8,8 +8,11 @@ import org.springframework.stereotype.Service
 @Service
 class PostService {
 
-    @Autowired
     PostRepository postRepository
+
+    PostService(PostRepository postRepository) {
+        this.postRepository = postRepository
+    }
 
     Post savePost(Post post) {
         postRepository.save(post)

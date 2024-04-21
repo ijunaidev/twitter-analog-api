@@ -9,8 +9,11 @@ import org.springframework.stereotype.Service
 @Service
 class CommentService {
 
-    @Autowired
     CommentRepository commentRepository
+
+    CommentService(CommentRepository commentRepository) {
+        this.commentRepository = commentRepository
+    }
 
     boolean canUserDeleteComment(Authentication authentication, Long commentId) {
         Comment comment = commentRepository.findById(commentId).orElse(null)
