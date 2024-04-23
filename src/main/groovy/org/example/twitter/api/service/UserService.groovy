@@ -1,10 +1,9 @@
 package org.example.twitter.api.service
 
-import org.example.twitter.api.entity.Role
+//import org.example.twitter.api.entity.Role
 import org.example.twitter.api.entity.User
-import org.example.twitter.api.repository.RoleRepository
+//import org.example.twitter.api.repository.RoleRepository
 import org.example.twitter.api.repository.UserRepository
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
@@ -12,27 +11,27 @@ class UserService {
 
     UserRepository userRepository
 
-    RoleRepository roleRepository
+    //RoleRepository roleRepository
 
-    UserService(UserRepository userRepository, RoleRepository roleRepository) {
+    UserService(UserRepository userRepository) {
         this.userRepository = userRepository
-        this.roleRepository = roleRepository
+        //this.roleRepository = roleRepository
     }
 
-    User saveUser(User user) {
-        Optional<Role> optionalUserRole = roleRepository.findByName("ROLE_USER")
-        if (!optionalUserRole.isPresent()) {
-            throw new RuntimeException("ROLE_USER not found")
-        }
-        Role userRole = optionalUserRole.get()
-
-        user.setRole(userRole)
-        user.setFollowers(null)
-        user.setFollowing(null)
-        user.setPosts(null)
-
-        userRepository.save(user)
-    }
+//    User saveUser(User user) {
+//        //Optional<Role> optionalUserRole = roleRepository.findByName("ROLE_USER")
+//        if (!optionalUserRole.isPresent()) {
+//            throw new RuntimeException("ROLE_USER not found")
+//        }
+//        Role userRole = optionalUserRole.get()
+//
+//        user.setRole(userRole)
+//        user.setFollowers(null)
+//        user.setFollowing(null)
+//        user.setPosts(null)
+//
+//        userRepository.save(user)
+//    }
 
 
     List<User> findAllUsers() {

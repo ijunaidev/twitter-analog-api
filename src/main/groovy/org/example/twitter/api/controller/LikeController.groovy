@@ -3,7 +3,6 @@ package org.example.twitter.api.controller
 import org.example.twitter.api.entity.Like
 import org.example.twitter.api.service.LikeService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -19,13 +18,11 @@ class LikeController {
     private LikeService likeService
 
     @PostMapping('/')
-    @PreAuthorize("hasRole('USER')")
     Like createLike(@RequestBody Like like) {
         likeService.saveLike(like)
     }
 
     @DeleteMapping('/{id}')
-    @PreAuthorize("hasRole('USER') and @likeService.canUserDeleteLike(principal, #id)")
     void deleteLike(@PathVariable Long id) {
         likeService.deleteLike(id)
     }

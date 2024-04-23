@@ -1,21 +1,27 @@
 package org.example.twitter.api.entity
 
+import org.example.twitter.api.enums.UserRole
 import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.core.userdetails.UserDetails
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.ManyToMany
-import javax.persistence.OneToMany
-import javax.persistence.OneToOne
+import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.OneToMany
+import jakarta.persistence.OneToOne
 
 @Entity
-class User {
+class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id
-
+    String firstname
+    String lastname
+    String email
     String username
     String password
 
@@ -28,6 +34,45 @@ class User {
     @OneToMany(mappedBy = 'following')
     Set<Follow> following
 
-    @OneToOne
-    Role role
+    //@OneToOne
+    @Enumerated(EnumType.STRING)
+    UserRole userRole
+
+//    @OneToOne
+//    Role role
+
+    @Override
+    Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(userRole.name()))
+    }
+
+    @Override
+    String getUsername() {
+        return username
+    }
+
+    @Override
+    String getPassword() {
+        return password
+    }
+
+    @Override
+    boolean isAccountNonExpired() {
+        return true
+    }
+
+    @Override
+    boolean isAccountNonLocked() {
+        return true
+    }
+
+    @Override
+    boolean isCredentialsNonExpired() {
+        return true
+    }
+
+    @Override
+    boolean isEnabled() {
+        return true
+    }
 }
