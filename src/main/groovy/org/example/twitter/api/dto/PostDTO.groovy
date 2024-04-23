@@ -7,6 +7,6 @@ class PostDTO {
     Long id
     String content
     Long authorId
-    Set<Long> commentIds
-    Set<Long> likeIds
+    List<CommentDTO> comments
+    List<LikeDTO> likes
 }

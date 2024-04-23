@@ -1,5 +1,6 @@
 package org.example.twitter.api.controller
 
+import org.example.twitter.api.dto.UserDTO
 import org.example.twitter.api.entity.User
 import org.example.twitter.api.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
@@ -27,17 +28,17 @@ class UserController {
     private PasswordEncoder passwordEncoder
 
     @GetMapping('/')
-    List<User> listUsers() {
+    List<UserDTO> listUsers() {
         userService.findAllUsers()
     }
 
     @GetMapping('/{id}')
-    User getUser(@PathVariable Long id) {
+    UserDTO getUser(@PathVariable Long id) {
         userService.findUserById(id)
     }
 
     @PutMapping('/{id}')
-    User updateUser(@PathVariable Long id, @RequestBody User user) {
+    UserDTO updateUser(@PathVariable Long id, @RequestBody User user) {
         userService.updateUser(id, user)
     }
 

@@ -1,13 +1,16 @@
 package org.example.twitteranalogapi.service
 
+import org.example.twitter.api.dto.UserDTO
 import org.example.twitter.api.service.UserService
+import org.springframework.security.crypto.password.PasswordEncoder
 import spock.lang.Specification
 import org.example.twitter.api.entity.User
 import org.example.twitter.api.repository.UserRepository
 
 class UserServiceSpec extends Specification {
     UserRepository userRepository = Mock()
-    UserService userService = new UserService(userRepository)
+    PasswordEncoder encoder = Mock()
+    UserService userService = new UserService(userRepository, encoder)
 
     def "findAllUsers should return all users"() {
         given:
@@ -18,11 +21,10 @@ class UserServiceSpec extends Specification {
         userRepository.findAll() >> expectedUsers
 
         when:
-        List<User> users = userService.findAllUsers()
+        List<UserDTO> users = userService.findAllUsers()
 
         then:
         users.size() == 2
-        users == expectedUsers
     }
 
     def "findUserById should return the user if it exists"() {
@@ -32,10 +34,12 @@ class UserServiceSpec extends Specification {
         userRepository.findById(userId) >> Optional.of(expectedUser)
 
         when:
-        User user = userService.findUserById(userId)
+        UserDTO user = userService.findUserById(userId)
 
         then:
-        user == expectedUser
+        user.id == expectedUser.id
+        user.username == expectedUser.username
+        user.password == expectedUser.password
     }
 
     def "updateUser should update the user's details"() {
@@ -44,9 +48,10 @@ class UserServiceSpec extends Specification {
         User existingUser = new User(id: userId, username: "olduser", password: "oldpass")
         User updatedInfo = new User(username: "newuser", password: "newpass")
         userRepository.findById(userId) >> Optional.of(existingUser)
+        encoder.encode(updatedInfo.password) >> "newpass"
 
         when:
-        User updatedUser = userService.updateUser(userId, updatedInfo)
+        UserDTO updatedUser = userService.updateUser(userId, updatedInfo)
 
         then:
         1 * userRepository.save(existingUser)

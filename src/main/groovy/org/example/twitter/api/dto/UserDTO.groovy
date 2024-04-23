@@ -10,6 +10,9 @@ class UserDTO {
     String lastname
     String email
     String username
+    String password
     UserRole userRole
-    Set<Long> postIds
+    List<PostDTO> posts
+    List<FollowDTO> followers
+    List<FollowDTO> following
 }
