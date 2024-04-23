@@ -33,21 +33,4 @@ class LikeServiceSpec extends Specification {
         then:
         1 * likeRepository.deleteById(likeId)
     }
-
-    def "test canUserDeleteLike method"() {
-        given:
-        User user = new User(username: "testUser", password: "password")
-        Like like = new Like(user: user)
-        like.id = 1L
-
-        Authentication auth = Mock()
-        auth.getName() >> "testUser"
-
-        when:
-        boolean canDelete = likeService.canUserDeleteLike(auth, 1L)
-
-        then:
-        1 * likeRepository.findById(1L) >> Optional.of(like)
-        canDelete == true
-    }
 }

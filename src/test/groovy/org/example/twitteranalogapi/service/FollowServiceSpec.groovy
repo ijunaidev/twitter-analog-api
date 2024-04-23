@@ -34,20 +34,4 @@ class FollowServiceSpec extends Specification {
         1 * followRepository.deleteById(followId)
     }
 
-    def "user can unfollow if they initiated the follow"() {
-        given:
-        Long followId = 1L
-        User follower = new User(username: "follower")
-        Follow follow = new Follow(id: followId, follower: follower)
-        Authentication auth = Mock(Authentication)
-        auth.getName() >> "follower"
-
-        when:
-        boolean result = followService.canUserUnfollow(auth, followId)
-
-        then:
-        1 * followRepository.findById(followId) >> Optional.of(follow)
-        result == true
-    }
-
 }

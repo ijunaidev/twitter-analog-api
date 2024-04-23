@@ -15,15 +15,6 @@ class FollowService {
         this.followRepository = followRepository
     }
 
-    boolean canUserUnfollow(Authentication auth, Long followId) {
-        Optional<Follow> followOpt = followRepository.findById(followId)
-        if (followOpt.isPresent()) {
-            Follow follow = followOpt.get()
-            return follow.follower.username.equals(auth.getName())
-        }
-        return false
-    }
-
     Follow saveFollow(Follow follow) {
         followRepository.save(follow)
     }

@@ -2,7 +2,6 @@ package org.example.twitter.api.service
 
 import org.example.twitter.api.entity.Post
 import org.example.twitter.api.repository.PostRepository
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service

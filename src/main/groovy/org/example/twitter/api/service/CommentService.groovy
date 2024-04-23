@@ -15,15 +15,6 @@ class CommentService {
         this.commentRepository = commentRepository
     }
 
-    boolean canUserDeleteComment(Authentication authentication, Long commentId) {
-        Comment comment = commentRepository.findById(commentId).orElse(null)
-        if (comment != null && authentication != null) {
-            String currentUsername = authentication.getName()
-            return comment.commenter.username.equals(currentUsername)
-        }
-        return false
-    }
-
     Comment saveComment(Comment comment) {
         commentRepository.save(comment)
     }

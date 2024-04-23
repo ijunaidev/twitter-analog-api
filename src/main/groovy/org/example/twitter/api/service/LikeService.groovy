@@ -15,15 +15,6 @@ class LikeService {
         this.likeRepository = likeRepository
     }
 
-    boolean canUserDeleteLike(Authentication authentication, Long likeId) {
-        Like like = likeRepository.findById(likeId).orElse(null)
-        if (like != null && authentication != null) {
-            String currentUsername = authentication.getName()
-            return like.user.username.equals(currentUsername)
-        }
-        return false
-    }
-
     Like saveLike(Like like) {
         likeRepository.save(like)
     }

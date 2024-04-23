@@ -12,7 +12,6 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.OneToMany
-import jakarta.persistence.OneToOne
 
 @Entity
 class User implements UserDetails {
@@ -34,12 +33,8 @@ class User implements UserDetails {
     @OneToMany(mappedBy = 'following')
     Set<Follow> following
 
-    //@OneToOne
     @Enumerated(EnumType.STRING)
     UserRole userRole
-
-//    @OneToOne
-//    Role role
 
     @Override
     Collection<? extends GrantedAuthority> getAuthorities() {

@@ -11,23 +11,6 @@ class CommentServiceSpec extends Specification {
 
     CommentRepository commentRepository = Mock()
     CommentService commentService = new CommentService(commentRepository)
-    Authentication authentication = Mock()
-
-    def "test canUserDeleteComment with authorization"() {
-        given:
-        Long commentId = 1L
-        String username = "user123"
-        Comment comment = new Comment(id: commentId, commenter: new User(username: username))
-        authentication.getName() >> username
-
-        when:
-        boolean canDelete = commentService.canUserDeleteComment(authentication, commentId)
-
-        then:
-        1 * commentRepository.findById(commentId) >> Optional.of(comment)
-        canDelete == true
-    }
-
 
     def "test saveComment saves a comment"() {
         given:
