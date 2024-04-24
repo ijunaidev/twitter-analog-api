@@ -1,16 +1,12 @@
 package org.example.twitter.api.service
 
 import org.example.twitter.api.dto.CommentDTO
-import org.example.twitter.api.dto.FollowDTO
 import org.example.twitter.api.dto.LikeDTO
 import org.example.twitter.api.dto.PostDTO
-import org.example.twitter.api.dto.UserDTO
 import org.example.twitter.api.entity.Comment
 import org.example.twitter.api.entity.Like
 import org.example.twitter.api.entity.Post
-import org.example.twitter.api.entity.User
 import org.example.twitter.api.repository.PostRepository
-import org.springframework.security.core.parameters.P
 import org.springframework.stereotype.Service
 
 @Service
