@@ -1,5 +1,6 @@
 package org.example.twitter.api.controller
 
+import org.example.twitter.api.dto.PostDTO
 import org.example.twitter.api.entity.Post
 import org.example.twitter.api.service.PostService
 import org.springframework.beans.factory.annotation.Autowired
@@ -20,12 +21,12 @@ class PostController {
     private PostService postService
 
     @PostMapping('/')
-    Post createPost(@RequestBody Post post) {
+    PostDTO createPost(@RequestBody Post post) {
         postService.savePost(post)
     }
 
     @GetMapping('/')
-    List<Post> listPosts() {
+    List<PostDTO> listPosts() {
         postService.findAllPosts()
     }
 
@@ -35,7 +36,7 @@ class PostController {
     }
 
     @PutMapping('/{id}')
-    Post updatePost(@PathVariable Long id, @RequestBody Post post) {
+    PostDTO updatePost(@PathVariable Long id, @RequestBody Post post) {
         postService.updatePost(id, post)
     }
 

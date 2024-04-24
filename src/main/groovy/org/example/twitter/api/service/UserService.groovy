@@ -35,9 +35,12 @@ class UserService {
     }
 
     UserDTO populateUserDetails(User user) {
+        if (user == null) {
+            return null
+        }
         List<PostDTO> postsList = new ArrayList<>()
         List<FollowDTO> followersList = new ArrayList<>()
-        List<PostDTO> followingList = new ArrayList<>()
+        List<FollowDTO> followingList = new ArrayList<>()
 
         UserDTO userDto = new UserDTO()
         userDto.setId(user.id)
@@ -82,12 +85,16 @@ class UserService {
             FollowDTO followDTO = new FollowDTO()
             followDTO.setId(follower.getId())
             followDTO.setFollowerId(follower.getFollower().getId())
+
+            followersList.add(followDTO)
         }
 
         for(Follow following : user.getFollowing()) {
             FollowDTO followDTO = new FollowDTO()
             followDTO.setId(following.getId())
             followDTO.setFollowingId(following.getFollowing().getId())
+
+            followingList.add(followDTO)
         }
         userDto.setPosts(postsList)
         return userDto
