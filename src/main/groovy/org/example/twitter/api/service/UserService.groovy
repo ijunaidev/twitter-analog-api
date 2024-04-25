@@ -84,7 +84,7 @@ class UserService {
         for(Follow follower : user.getFollowers()) {
             FollowDTO followDTO = new FollowDTO()
             followDTO.setId(follower.getId())
-            followDTO.setFollowerId(follower.getFollower().getId())
+            followDTO.setFollowerId(follower.getFollowing().getId())
 
             followersList.add(followDTO)
         }
@@ -92,11 +92,13 @@ class UserService {
         for(Follow following : user.getFollowing()) {
             FollowDTO followDTO = new FollowDTO()
             followDTO.setId(following.getId())
-            followDTO.setFollowingId(following.getFollowing().getId())
+            followDTO.setFollowingId(following.getFollower().getId())
 
             followingList.add(followDTO)
         }
         userDto.setPosts(postsList)
+        userDto.setFollowers(followersList)
+        userDto.setFollowing(followingList)
         return userDto
     }
 
