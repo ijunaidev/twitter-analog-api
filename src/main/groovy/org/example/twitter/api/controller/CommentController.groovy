@@ -1,5 +1,6 @@
 package org.example.twitter.api.controller
 
+import org.example.twitter.api.dto.CommentDTO
 import org.example.twitter.api.entity.Comment
 import org.example.twitter.api.service.CommentService
 import org.springframework.beans.factory.annotation.Autowired
@@ -20,22 +21,22 @@ class CommentController {
     private CommentService commentService
 
     @PostMapping('/')
-    Comment createComment(@RequestBody Comment comment) {
+    CommentDTO createComment(@RequestBody Comment comment) {
         commentService.saveComment(comment)
     }
 
     @GetMapping('/')
-    List<Comment> listComments() {
+    List<CommentDTO> listComments() {
         commentService.findAllComments()
     }
 
     @GetMapping('/{id}')
-    Comment getComment(@PathVariable Long id) {
+    CommentDTO getComment(@PathVariable Long id) {
         commentService.findCommentById(id)
     }
 
     @PutMapping('/{id}')
-    Comment updateComment(@PathVariable Long id, @RequestBody Comment comment) {
+    CommentDTO updateComment(@PathVariable Long id, @RequestBody Comment comment) {
         commentService.updateComment(id, comment)
     }
 

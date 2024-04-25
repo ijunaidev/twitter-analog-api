@@ -1,9 +1,8 @@
 package org.example.twitter.api.service
 
+import org.example.twitter.api.dto.CommentDTO
 import org.example.twitter.api.entity.Comment
 import org.example.twitter.api.repository.CommentRepository
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Service
 
 @Service
@@ -15,25 +14,45 @@ class CommentService {
         this.commentRepository = commentRepository
     }
 
-    Comment saveComment(Comment comment) {
-        commentRepository.save(comment)
+    CommentDTO saveComment(Comment comment) {
+        return populateCommentDetails(commentRepository.save(comment))
     }
 
-    List<Comment> findAllComments() {
-        commentRepository.findAll()
+    List<CommentDTO> findAllComments() {
+        List<Comment> commentsList = commentRepository.findAll()
+        List<CommentDTO> commentDtoList = new ArrayList<>()
+
+        for(Comment comment : commentsList) {
+            commentDtoList.add(populateCommentDetails(comment))
+        }
+
+        return commentDtoList
     }
 
-    Comment findCommentById(Long id) {
-        commentRepository.findById(id).orElse(null)
+    CommentDTO findCommentById(Long id) {
+        return populateCommentDetails(commentRepository.findById(id).orElse(null))
     }
 
-    Comment updateComment(Long id, Comment comment) {
-        Comment existingComment = findCommentById(id)
+    CommentDTO updateComment(Long id, Comment comment) {
+        Comment existingComment = commentRepository.findById(id).orElse(null)
         if (existingComment) {
             existingComment.text = comment.text
             commentRepository.save(existingComment)
         }
-        return existingComment
+        return populateCommentDetails(existingComment)
+    }
+
+    CommentDTO populateCommentDetails(Comment comment) {
+        if (comment == null) {
+            return
+        }
+        CommentDTO commentDto = new CommentDTO()
+        commentDto.setId(comment.getId())
+        commentDto.setText(comment.getText())
+        commentDto.setPostId(comment.getPost().getId())
+        commentDto.setCommenterId(comment.getCommenter().getId())
+
+        return commentDto
     }
 
     void deleteComment(Long id) {
