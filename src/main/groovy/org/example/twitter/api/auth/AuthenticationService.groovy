@@ -1,15 +1,14 @@
 package org.example.twitter.api.auth
 
-import lombok.RequiredArgsConstructor
+
 import org.example.twitter.api.config.JwtTokenService
+import org.example.twitter.api.entity.User
 import org.example.twitter.api.enums.UserRole
 import org.example.twitter.api.repository.UserRepository
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
-import org.example.twitter.api.entity.User
 
 @Service
 class AuthenticationService {
